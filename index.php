@@ -1,14 +1,44 @@
 <?php
 
-$array = [1,2,3,4,5];
+class Box {
+    private $width;
+    protected $height;
+    public int $length;
 
-for($i=0;$i<count($array);$i++){
-    $value = &$array[$i];
-
+    public function getWidth(){
+        return $this->width . ' meters';
+    }
+    public function setWidth($width){
+        if($width < 0){
+            $width = 0;
+        }
+        $this->width = $width;
+    }
 }
 
-foreach($array as &$value){
-    $value *= 2;
-    var_dump($value);
+class MetalBox extends Box {
+    use HasMaterial;
+    public function echoWidth(){
+        var_dump($this->width);
+    }
+    public function echoHeight(){
+        var_dump($this->height);
+    }
 }
-var_dump($array);
+
+class Ball {
+    use HasMaterial;
+}
+
+trait HasMaterial {
+    public $material;
+    public function setMaterial($material){
+        $this->material = $material;
+    }
+}
+
+$box = new MetalBox();
+$box->setWidth(-10);
+$box->echoHeight();
+$box->setMaterial('wood');
+var_dump($box);
