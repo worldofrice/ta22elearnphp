@@ -10,27 +10,26 @@ function dump(...$vars){
     echo '</pre>';
 }
 
-switch($_SERVER['REQUEST_URI']){
-    case '/':
-        $posts = [
-            ['title' => 'Title 1', 'body' => 'some body 1'],
-            ['title' => 'Title 2', 'body' => 'some body 2'],
-            ['title' => 'Title 3', 'body' => 'some body 3'],
-            ['title' => 'Title 4', 'body' => 'some body 4'],
-          ];
-        include 'views/index.php';
-        break;
-    case '/us':
-        $posts = [
-            ['title' => 'Title 5', 'body' => 'some body 5'],
-            ['title' => 'Title 6', 'body' => 'some body 6'],
-            ['title' => 'Title 7', 'body' => 'some body 7'],
-            ['title' => 'Title 8', 'body' => 'some body 8'],
-          ];
-        include 'views/us.php';
-        break;
-    default:
-        echo 'error 404: Page not found';
-        break;
-}
+spl_autoload_register(function($class){
+    $class=substr($class, 4);
+    require_once "src/$class.php";
+});
 
+require 'routes.php';
+
+$router = new App\Router($_SERVER['REQUEST_URI']);
+$match = $router->match();
+
+if($match){
+    if(is_callable($match['action'])){
+        call_user_func($match['action']);
+    } elseif(is_array($match['action']) && count($match['action']) === 2){
+        $class = $match['action'][0];
+        $controller = new $class();
+        $method = $match['action'][1];
+        $controller->$method();
+    }
+    
+} else {
+    http_response_code(404);
+}
