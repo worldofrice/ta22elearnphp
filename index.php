@@ -1,31 +1,16 @@
 <?php
 
-class ConsoleLogger implements Logger {
-    public function log($message){
-        echo "$message\n";
-    }
+class Box {
+    public $var;
 }
 
-class Work {
-    public function task(Logger $logger){
-        for($i=0;$i<10;$i++){
-            $logger->log($i);
-        }
-    }
-}
+$num1 = 1;
+$num2 = $num1;
+$num2 = 2;
+var_dump($num1, $num2);
 
-interface Logger {
-    public function log($message);
-}
-
-
-//
-
-class NothingLogger implements Logger{
-    public function log($message){
-       
-    }
-}
-$logger = new NothingLogger();
-$work = new Work();
-$work->task($logger);
+$box1 = new Box();
+$box1->var = 1;
+$box2 = clone $box1;
+$box2->var = 2;
+var_dump($box1, $box2);
