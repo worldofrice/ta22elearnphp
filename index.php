@@ -1,22 +1,21 @@
-<?php
+<?php include 'partials/header.php'; ?>
 
-class Box {
-    public static $count = 0;
-    public $bar = 1; 
-    public function test2(){
-        var_dump(static::class, self::$count);
-    }
-    public static function test(){
-        
-        var_dump(static::class);
-    }
-}
-class MetalBox extends Box {
+<main class="container">
+  <?php include 'partials/hero.php'; ?>
+  <?php include 'partials/featured.php'; ?>
+  
 
-}
-Box::$count = 1;
-Box::$count = 2;
-MetalBox::test();
-$box = new Box();
-$box->test2();
-var_dump(Box::$count, Box::$count);
+  <div class="row g-5">
+    <div class="col-md-8">
+      <?php include 'partials/posts.php'; ?>
+
+    </div>
+
+    <div class="col-md-4">
+      <?php include 'partials/side.php'; ?>
+    </div>
+  </div>
+
+</main>
+
+<?php include 'partials/footer.php'; ?>
