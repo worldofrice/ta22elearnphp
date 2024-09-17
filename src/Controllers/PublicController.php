@@ -20,4 +20,18 @@ class PublicController {
         ];
         include 'views/us.php';
     }
+
+    public function form(){
+        // $fname = '';
+        // if(isset($_GET['fname'])){
+        //     $fname = $_GET['fname'];
+        // }
+        // $fname = isset($_GET['fname']) ? $_GET['fname'] : '';
+        dump($_GET, $_POST);
+        $fname = $_GET['fname'] ?? $_POST['fname'] ?? '';
+        include 'views/form.php';
+    }
+    public function answer(){
+        dump($_GET, $_POST, $_REQUEST);
+    }
 }
