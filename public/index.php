@@ -33,6 +33,8 @@ if($match){
         $controller = new $class();
         $method = $match->action[1];
         $controller->$method();
+    } else {
+        echo 'invalid route definition';
     }
     
 } else {
